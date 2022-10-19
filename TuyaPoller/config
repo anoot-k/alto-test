@@ -1,0 +1,9 @@
+{
+  # VOLTTRON config files are JSON with support for python style comments.
+  "endpoint": "https://openapi.tuyain.com",
+  "deviceId": "vdevo166609151843282",
+  "accessId": "ya7csatsk5r9yqagh78m",
+  "accessKey": "f2d8a1c74ad34b8e941ddf4a1f1c406e",
+  "topic": "devices/altotest/test/tuya",
+  "interval": 20 # integer : polling interval
+}

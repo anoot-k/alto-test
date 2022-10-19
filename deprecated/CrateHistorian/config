@@ -1,9 +1,9 @@
 {
     "connection": {
         "type": "crate",
-        "schema": "testing",
+        "schema": "doc",
         "params": {
-            "host": "localhost:4200"
+            "host": "https://magenta-ben-quadinaros.aks1.eastus2.azure.cratedb.net:4200/"
         }
     }
 }

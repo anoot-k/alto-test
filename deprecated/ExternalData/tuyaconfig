@@ -1,0 +1,15 @@
+{
+    "interval":100,
+    "global_topic_prefix": "record",
+    "sources":
+    [
+     {
+        "type": "json",
+        "url": "https://openapi.tuyain.com/v1.0/iot-03/devices/status",
+        "params": {"device_ids": "vdevo166609151843282"},
+        "topic": "devices/altotest/test/tuya",
+        "path": ["parentobject", "0"],
+        "key": ["result", "$"]
+     }
+    ]
+}

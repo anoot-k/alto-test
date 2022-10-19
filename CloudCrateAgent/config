@@ -1,0 +1,7 @@
+{
+  # VOLTTRON config files are JSON with support for python style comments.
+  "host": "https://magenta-ben-quadinaros.aks1.eastus2.azure.cratedb.net:4200/",  # Hostname for crateDB instances
+  "user": "writer", # user
+  "password": "writer", # password
+  "topic": "devices/altotest/test/"
+}
