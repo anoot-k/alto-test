@@ -71,7 +71,7 @@ python alto-test/alto-test/dummy/meter/modbus_device.py
 This script default setting was set to bind the ip address as localhost, default port on 502 and default slave on salve id 1.
 If any configuration needs to be changed, edit under __main__ entry point in the script then rerun it.
 
-py
+```py
 if __name__ == '__main__':
     ModDummySlave(host=<host>, port=<port>, slaveId=<slaveId>).run()
 ```
