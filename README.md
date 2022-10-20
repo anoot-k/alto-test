@@ -52,6 +52,7 @@ UUID AGENT                    IDENTITY                   TAG STATUS          HEA
 f listeneragent-3.3        listeneragent-3.3_1            running [9713]  GOOD
 ```
 
+
 ## Setup modbus dummy device
 
 ### Setup diagslave
@@ -88,6 +89,7 @@ If any configuration needs to be changed, edit under __main__ entry point in the
 if __name__ == '__main__':
     ModDummySlave(host=<host>, port=<port>, slaveId=<slaveId>).run()
 ```
+
 
 ## Setup Tuya dummy device
 
@@ -149,6 +151,7 @@ UUID AGENT                    IDENTITY                   TAG STATUS          HEA
 4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          running [1292]  GOOD
 ```
 
+
 ## Setup configuration file for CloudCrateAgent agent
 
 The config file is located at [~/CloudCrateAgent/config]
@@ -174,9 +177,58 @@ UUID AGENT                    IDENTITY                   TAG STATUS          HEA
 
 
 ## Setup configuration file for modbus platform driver
-For modbus platform driver configuration. 2 config files are needed to be configurated : [~/examples/configurations/drivers/modbus_test.conf](https://github.com/anoot-k/alto-test/blob/assignment-branch/examples/configurations/drivers/modbus_test.conf)
+For modbus platform driver configuration. 2 config files are needed to be configurated : [~/examples/configurations/drivers/modbus_test.conf](https://github.com/anoot-k/alto-test/blob/assignment-branch/examples/configurations/drivers/modbus_test.conf) used for configurate slave behavior and [~/examples/configurations/drivers/modbus_registers.csv](https://github.com/anoot-k/alto-test/blob/assignment-branch/examples/configurations/drivers/modbus_registers.csv) used for configurate modbus registers type and data addresses. (In this example, little endian 32bit floating point : '<f' is used)
+
+Store both configuration files into platform driver config
+```sh
+vctl config store platform.driver devices/altotest/test/modbus examples/configurations/drivers/modbus_test.conf
+vctl config store platform.driver modbus_registers.csv examples/configurations/drivers/modbus_registers.csv --csv
+```
+Check if stored correctlt
+```sh
+vctl config list platform.driver
+```
+This should be shown as a response from above command.
+```sh
+devices/altotest/test/modbus
+modbus_registers.csv
+```
+
 
 ## Deploy
+
+Install all of the above agents
+```sh
+python scripts/install-agent.py -s TuyaPoller -c TuyaPoller/config
+python scripts/install-agent.py -s CloudCrateAgent -c CloudCrateAgent/config
+python scripts/install-agent.py -s services/core/PlatformDriverAgent -c services/core/PlatformDriverAgent/platform-driver.agent
+```
+Check the result of the installation
+```sh
+vctl status
+```
+```sh
+UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
+0 cloudcrateagentagent-0.1 cloudcrateagentagent-0.1_1     0               
+f listeneragent-3.3        listeneragent-3.3_1            running [9713]  GOOD
+9 platform_driveragent-4.0 platform.driver                0               
+4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          0               
+```
+Run each agent and check the status
+```sh
+vctl start tuyapolleragent-0.1
+vctl start platform_driveragent-4.0
+vctl start cloudcrateagentagent-0.1
+vctl status
+```
+Result
+```sh
+UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
+0 cloudcrateagentagent-0.1 cloudcrateagentagent-0.1_1     running [14268] GOOD
+f listeneragent-3.3        listeneragent-3.3_1            running [9713]  GOOD
+9 platform_driveragent-4.0 platform.driver                running [14174] GOOD
+4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          running [14386] GOOD
+```
 
 
 
