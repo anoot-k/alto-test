@@ -38,6 +38,19 @@ activate voltron virtual environment.
 ```sh
 source ~/alto-test/volttron/env/bin/activate
 ```
+Install Listener agent to debug message on messsage bus
+```sh
+python scripts/install-agent.py -s examples/ListenerAgent --start
+```
+Check if the Listener agent is running normally
+```sh
+vctl status
+```
+This should be shown and you are good to go
+```sh
+UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
+f listeneragent-3.3        listeneragent-3.3_1            running [9713]  GOOD
+```
 
 ## Setup modbus dummy device
 
@@ -78,6 +91,8 @@ if __name__ == '__main__':
 
 ## Setup Tuya dummy device
 
+Tuya cloud IoT access is needed to setup Tuya virtual devices. Follow [this guideline](https://developer.tuya.com/en/docs/iot/quick-start1?id=K95ztz9u9t89n)
+Recommendation : Select the region when you build the cloud project's region to be *India*. Choosing Chinese region will required you to do the account verification. If you are not a Chinese citizen, select other region will be a lot easire.
 ## CrateDB table structure
 Crate on cloud was setup following this [guideline](https://crate.io/blog/visualizing-time-series-data-with-grafana-and-cratedb)
 
@@ -90,7 +105,76 @@ create table obj_cpu_transaction(
 ```
 ## Setup configuration file for TuyaPoller agent
 
+After finished setting up Tuya Dummy device following guideline above, you should get your device ID and your account access key. From your main console page, it should be in *Overview* and *Devices* tabs.
+
+After that go to TuyaPoller agent's configuration file which locate at [~/TuyaPoller/config](https://github.com/anoot-k/alto-test/blob/main/TuyaPoller/config)
+
+Edit the file
+```sh
+vim ~/TuyaPoller/cinfig
+```
+```
+{
+  # VOLTTRON config files are JSON with support for python style comments.
+  "endpoint": "https://openapi.tuyain.com", # Your region endpoint. Other region can be found here :  
+  "deviceId": "<YOUR_DEVICE_ID>",
+  "accessId": "<YOUR_ACCESS_ID>",
+  "accessKey": "<YOUR ACCESS_KEY>",
+  "topic": "devices/altotest/test/tuya",  # topics for pub
+  "interval": 20  # integer : polling interval
+}
+```
+Exit vim
+Install the agent
+```sh
+python scripts/install-agent.py -s TuyaPoller -c TuyaPoller/config
+```
+Check if the agent is installed correctly
+```sh
+vctl status
+```
+Something like this should show up
+```sh
+UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
+4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          0               
+```
+Run the agent and check status again
+```sh
+vctl start tuyapolleragent-0.1
+vctl status
+```
+This should be shown
+```sh
+UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
+4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          running [1292]  GOOD
+```
+
 ## Setup configuration file for CloudCrateAgent agent
+
+The config file is located at [~/CloudCrateAgent/config]
+```sh
+{
+  # VOLTTRON config files are JSON with support for python style comments.
+  "host": "https://magenta-ben-quadinaros.aks1.eastus2.azure.cratedb.net:4200/",  # Hostname for crateDB instances
+  "user": "writer", # user for accessing CloudCrate
+  "password": "writer", # password for accessing CloudCrate
+  "topic": "devices/altotest/test/"  # Sub topic
+}
+```
+Install and run the agaent
+```sh
+python scripts/install-agent.py -s CloudCrateAgent -c CloudCrateAgent/config
+vctl start cloudcrateagentagent-0.1
+```
+this should be shown
+```sh
+UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
+0 cloudcrateagentagent-0.1 cloudcrateagentagent-0.1_1     running [1187]  GOOD
+```
+
+
+## Setup configuration file for modbus platform driver
+For modbus platform driver configuration. 2 config files are needed to be configurated : [~/config/modbus.config]()
 
 ## Deploy
 
