@@ -174,7 +174,7 @@ UUID AGENT                    IDENTITY                   TAG STATUS          HEA
 
 
 ## Setup configuration file for modbus platform driver
-For modbus platform driver configuration. 2 config files are needed to be configurated : [~/config/modbus.config]()
+For modbus platform driver configuration. 2 config files are needed to be configurated : [~/examples/configurations/drivers/modbus_test.conf](https://github.com/anoot-k/alto-test/blob/assignment-branch/examples/configurations/drivers/modbus_test.conf)
 
 ## Deploy
 
