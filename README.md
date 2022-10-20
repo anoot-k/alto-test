@@ -104,7 +104,14 @@ create table obj_cpu_transaction(
   topic text,
   obj object);
 ```
+Data model listed below :
+| column name | type | definition |
+| ------------- | ------------- | ------------ |
+| ts | timestamp with time zone  | Column to store timestamp data in which crate has receive each data |
+| topic | text | Column to store source topic which scraped from CloudCrateAgent |
+| obj | JSON object | Column to store each device responses from agent |
 
+`obj` column was intentionally selected to object type to store various data format generated from each device. (Maybe NoSQL would be better)
 
 ## Setup configuration file for TuyaPoller agent
 
