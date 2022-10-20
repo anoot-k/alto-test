@@ -1,0 +1,13 @@
+Reference Point Name,Volttron Point Name,Units,Units Details,Modbus Register,Writable,Point Address,Default Value,Notes
+cpu_1,cpu_1,%,0.00 to 100.00,<f,FALSE,1,,
+cpu_2,cpu_2,%,0.00 to 100.00,<f,FALSE,3,,
+cpu_3,cpu_3,%,0.00 to 100.00,<f,FALSE,5,,
+cpu_4,cpu_4,%,0.00 to 100.00,<f,FALSE,7,,
+cpu_5,cpu_5,%,0.00 to 100.00,<f,FALSE,9,,
+cpu_6,cpu_6,%,0.00 to 100.00,<f,FALSE,11,,
+cpu_7,cpu_7,%,0.00 to 100.00,<f,FALSE,13,,
+cpu_8,cpu_8,%,0.00 to 100.00,<f,FALSE,15,,
+cpu_9,cpu_9,%,0.00 to 100.00,<f,FALSE,17,,
+cpu_10,cpu_10,%,0.00 to 100.00,<f,FALSE,19,,
+cpu_11,cpu_11,%,0.00 to 100.00,<f,FALSE,21,,
+cpu_12,cpu_12,%,0.00 to 100.00,<f,FALSE,23,,
