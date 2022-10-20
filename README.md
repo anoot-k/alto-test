@@ -2,8 +2,7 @@ This repo is intended to sbmit assignment by altotech.
 
 The main branch of this repo stored the same set of code with this branch, only README is difference.
 
-
-![Untitled Diagram-Page-2 drawio (4)](https://user-images.githubusercontent.com/78077500/196720082-48fef0c7-aaf2-4050-bd90-b5fd8ac35b4d.png)
+![Untitled Diagram-Page-2 drawio (6)](https://user-images.githubusercontent.com/78077500/196834712-01a41ca0-115c-4fee-b8c5-cc4677782833.png)
 
 
 ## System Architecture
@@ -190,7 +189,7 @@ vctl start platform_driveragent-4.0
 vctl start cloudcrateagentagent-0.1
 vctl status
 ```
-Result
+This result should be expected
 ```sh
 UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
 0 cloudcrateagentagent-0.1 cloudcrateagentagent-0.1_1     running [14268] GOOD
@@ -198,8 +197,3 @@ f listeneragent-3.3        listeneragent-3.3_1            running [9713]  GOOD
 9 platform_driveragent-4.0 platform.driver                running [14174] GOOD
 4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          running [14386] GOOD
 ```
-
-
-
-
-
