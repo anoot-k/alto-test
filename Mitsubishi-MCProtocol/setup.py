@@ -17,7 +17,7 @@ setup(
     version=__version__,
     author="Anoot Kritsanapan",
     author_email="anoot.kritsanapan@gmail.com",
-    description="Agent for creating comunication between volttron and mitsubishi PLC with MCProtocol support capability",
+    description="**THIS AGENT HAS NOT BEEN PROPRLY TESTED, DO NOT USE THIS ON ACTUAL MACHINE IN ANY CIRCUMTANCES**",
     install_requires=['volttron'],
     packages=packages,
     entry_points={

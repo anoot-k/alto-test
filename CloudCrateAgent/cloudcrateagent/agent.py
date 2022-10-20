@@ -38,7 +38,12 @@ def cloudcrateagent(config_path, **kwargs):
     host = config.get('host', 'localhost:4200')
     user = config.get('user', None)
     password = config.get('password', None)
-    topic = config.get('topic', 'devices/all')
+    topic = config.get('topic', 'devices/')
+
+    '''
+    Add in default parameter here incase nothing is parse on config file.
+    Default parameters are specified on local crate and monitor topic for all devices agent.
+    '''
 
     return Cloudcrateagent(host, user, password, topic, **kwargs)
 
@@ -124,13 +129,14 @@ class Cloudcrateagent(Agent):
         Initilize cursor
         '''
         cursor = connection.cursor()
-        #query_string = 'INSERT INTO doc.obj_cpu_transaction (topic, obj) VALUES (?, ?)'
+        # construc query string to insert only topic and content of message. timestamp column on data base used default value for NOW()
         query_string = 'INSERT INTO obj_cpu_transaction (topic, obj) VALUES (?, ?)'
         try:
             cursor.execute(query_string, (str(topic), json.dumps(message[0])))
         except Exception as ex:
             _log.error(f'INSERT failed with exception : {ex}')
 
+        # Dont forget to close connections
         cursor.close()
         connection.close()
         

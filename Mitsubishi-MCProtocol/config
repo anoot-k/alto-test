@@ -1,10 +1,12 @@
 {
   # VOLTTRON config files are JSON with support for python style comments.
-  "host": 2,
-  "port": "some/random/topic2", #Strings
-  "setting3": true, # Booleans: remember that in JSON true and false are not capitalized.
-  "setting4": false,
-  "setting5": 5.1, # Floating point numbers.
-  "setting6": [1,2,3,4], #Lists
-  "setting7": {"setting7a": "a", "setting7b": "b"} # Objects
+  "host": "192.168.0.1",
+  "port": 1025,
+  "type": "Q", # String : Supported type are : ["Q", "L", "iQ-L", "iQ-R"] only. For QnA type, use "L".
+  "registers": {
+    "D100" : 100,  # Registers store object with key-value pair of "Device name" : int(Sequintial Block)
+    "X10" : 10
+  },
+  "commtype": "binary"  # "binary" or "ascii",
+  "topic" : "devices/altotest/test/plc/mitsubishi"
 }

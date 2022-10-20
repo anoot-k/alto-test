@@ -8,6 +8,8 @@ import logging
 import sys
 from volttron.platform.agent import utils
 from volttron.platform.vip.agent import Agent, Core, RPC
+import pymcprotocol
+import json
 
 _log = logging.getLogger(__name__)
 utils.setup_logging()
@@ -43,15 +45,28 @@ class Mcprotocol(Agent):
     Document agent constructor here.
     """
 
-    def __init__(self, setting1=1, setting2="some/random/topic", **kwargs):
+    def __init__(self, type, registers, host='192.168.0.1', port=1025, commtype='binary',topic='devices/altotest/test/plc/mitsubishi' **kwargs):
         super(Mcprotocol, self).__init__(**kwargs)
         _log.debug("vip_identity: " + self.core.identity)
 
-        self.setting1 = setting1
-        self.setting2 = setting2
+        self.type_list = ["Q", "L", "iQ-L", "iQ-R"]
 
-        self.default_config = {"setting1": setting1,
-                               "setting2": setting2}
+        self.host = host
+        self.port = int(port)
+        if type in self.type_list:  # Check for PLC CPU type
+            self.type = type
+        else:
+            raise pymcprotocol.type3e.PLCTypeError
+        self.commtype = commtype
+        self.registers = registers
+        self.topic = topic
+
+        self.default_config = {"host": self.host,
+                               "port": self.port,
+                               "type": self.type,
+                               "commtype": self.commtype,
+                               "registers": self.registers,
+                               "topic": topic}
 
         # Set a default configuration to ensure that self.configure is called immediately to setup
         # the agent.
@@ -72,16 +87,27 @@ class Mcprotocol(Agent):
         _log.debug("Configuring Agent")
 
         try:
-            setting1 = int(config["setting1"])
-            setting2 = str(config["setting2"])
+            host = config["host"]
+            port = int(config["port"])
+            type = config["type"]
+            commtype = config["commtype"]
+            registers = config["registers"]
+            topic = topic["topic"]
         except ValueError as e:
             _log.error("ERROR PROCESSING CONFIGURATION: {}".format(e))
             return
 
-        self.setting1 = setting1
-        self.setting2 = setting2
+        self.host = host
+        self.port = port
+        if type in self.type_list:
+            self.type = type
+        else:
+            raise pymcprotocol.type3e.PLCTypeError
+        self.commtype = commtype
+        self.registers = registers
+        self.topic = topic
 
-        self._create_subscriptions(self.setting2)
+        self._create_subscriptions(self.topic)
 
     def _create_subscriptions(self, topic):
         """
@@ -124,6 +150,27 @@ class Mcprotocol(Agent):
         the message bus.
         """
         pass
+
+    @Core.periodic(10)
+    def cron_job(self):
+        pymc3e = pymcprotocol.Type3E(plctype=self.type)  # Initialize connection to PLC
+        pymc3e.setaccessopt(commtype=self.commtype)
+        try :  # Put everything inside try block to avoid unexpected error
+            pymc3e.connect(self.host, self.port)
+            dict = {}
+            for device, length in self.registers.items():
+                if str(device)[0] == 'D':  # For PLC, D will store 16 bit WORD data and X will store bit data
+                    dict[device] =  pymc3e.batchread_wordunits(headdevice=device, readsize=length)
+                elif str(device)[0] == 'X':
+                    dict[device] =  pymc3e.batchread_bitunits(headdevice=device, readsize=length)
+                else:
+                    _log.error(f'Wrong device type input')
+                    pass
+            self.vip.pubsub.publish('pubsub', self.topic, message=json.dumps(dict))
+            pymc3e.close()
+        except Exception as ex:
+            _log.error(f'Operation failed with exception : {ex}')  # There are many exceptions that might be able to occur here.
+            pass
 
     @RPC.export
     def rpc_method(self, arg1, arg2, kwarg1=None, kwarg2=None):
