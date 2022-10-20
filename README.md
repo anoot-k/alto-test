@@ -2,7 +2,7 @@ This repo is intended to sbmit assignment by altotech.
 
 The main branch of this repo stored the same set of code with this branch, only README is difference.
 
-![Untitled Diagram-Page-2 drawio (6)](https://user-images.githubusercontent.com/78077500/196834712-01a41ca0-115c-4fee-b8c5-cc4677782833.png)
+![Untitled Diagram-Page-2 drawio (5)](https://user-images.githubusercontent.com/78077500/196838155-f671dd15-0e08-4ddb-9e28-ac0329f88c95.png)
 
 
 ## System Architecture
@@ -25,7 +25,7 @@ The callback function will send data into transaction table which is logging top
 Clone this repositry.
 ```sh
 cd ~
-git clone 
+git clone --branch assignment-branch https://github.com/anoot-k/alto-test.git
 cd alto-test
 ```
 Now you will be in `$VOLTTRON_HOME` directory
