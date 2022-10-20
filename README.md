@@ -131,7 +131,10 @@ Exit vim
 
 
 ## Setup configuration file for CloudCrateAgent agent
-
+Before running CloudCrateAgent, crate-python dependencies should be installed.
+```sh
+python bootstrap.py --databases
+```
 The config file is located at [~/CloudCrateAgent/config]
 ```sh
 {
