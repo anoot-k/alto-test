@@ -105,6 +105,8 @@ create table obj_cpu_transaction(
   topic text,
   obj object);
 ```
+
+
 ## Setup configuration file for TuyaPoller agent
 
 After finished setting up Tuya Dummy device following guideline above, you should get your device ID and your account access key. From your main console page, it should be in *Overview* and *Devices* tabs.
@@ -113,7 +115,7 @@ After that go to TuyaPoller agent's configuration file which locate at [~/TuyaPo
 
 Edit the file
 ```sh
-vim ~/TuyaPoller/cinfig
+vim ~/TuyaPoller/config
 ```
 ```
 {
@@ -127,29 +129,6 @@ vim ~/TuyaPoller/cinfig
 }
 ```
 Exit vim
-Install the agent
-```sh
-python scripts/install-agent.py -s TuyaPoller -c TuyaPoller/config
-```
-Check if the agent is installed correctly
-```sh
-vctl status
-```
-Something like this should show up
-```sh
-UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
-4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          0               
-```
-Run the agent and check status again
-```sh
-vctl start tuyapolleragent-0.1
-vctl status
-```
-This should be shown
-```sh
-UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
-4 tuyapolleragent-0.1      tuyapolleragent-0.1_1          running [1292]  GOOD
-```
 
 
 ## Setup configuration file for CloudCrateAgent agent
@@ -163,16 +142,6 @@ The config file is located at [~/CloudCrateAgent/config]
   "password": "writer", # password for accessing CloudCrate
   "topic": "devices/altotest/test/"  # Sub topic
 }
-```
-Install and run the agaent
-```sh
-python scripts/install-agent.py -s CloudCrateAgent -c CloudCrateAgent/config
-vctl start cloudcrateagentagent-0.1
-```
-this should be shown
-```sh
-UUID AGENT                    IDENTITY                   TAG STATUS          HEALTH
-0 cloudcrateagentagent-0.1 cloudcrateagentagent-0.1_1     running [1187]  GOOD
 ```
 
 
