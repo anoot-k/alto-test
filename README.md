@@ -1,6 +1,6 @@
-This repo is intended to sbmit assignment by altotech.
+This repo is intended to sbmit assignment by AltoTech.
 
-The main branch of this repo stored the same set of code with this branch, only README is difference.
+Using this branch since forking from VOLTTRON repo brings automate test pipeline along to main. I dont want to have test fail message sending to my email all the time...
 
 ![Untitled Diagram-Page-2 drawio (5)](https://user-images.githubusercontent.com/78077500/196838155-f671dd15-0e08-4ddb-9e28-ac0329f88c95.png)
 
@@ -79,7 +79,7 @@ python bootstrap.py --drivers
 ```
 Run python script
 ```sh
-python alto-test/alto-test/dummy/meter/modbus_device.py
+python ~/alto-test/dummy/meter/modbus_device.py
 ```
 This script default setting was set to bind the ip address as localhost, default port on 502 and default slave on salve id 1.
 If any configuration needs to be changed, edit under __main__ entry point in the script then rerun it.
